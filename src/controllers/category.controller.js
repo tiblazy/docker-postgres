@@ -12,9 +12,11 @@ const createCategoryController = async (req, res) => {
   try {
     const newCategory = await createCategoryService(name);
 
-    return res.status(201).json(newCategory);
+    return res
+      .status(201)
+      .json({ message: "Category Created", category: newCategory });
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ message: err.message });
   }
 };
 
@@ -24,7 +26,7 @@ const listCategoryController = async (req, res) => {
 
     return res.status(200).json(listCategory);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ message: err.message });
   }
 };
 
@@ -36,7 +38,7 @@ const filterCategoryController = async (req, res) => {
 
     return res.status(200).json(filterCategory);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ message: err.message });
   }
 };
 
@@ -47,9 +49,11 @@ const updateCategoryController = async (req, res) => {
   try {
     const updateCategory = await updateCategoryService(id, name);
 
-    return res.status(200).json(updateCategory);
+    return res
+      .status(200)
+      .json({ message: "Category Updated", category: updateCategory });
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ message: err.message });
   }
 };
 
@@ -59,9 +63,9 @@ const deleteCategoryController = async (req, res) => {
   try {
     const deleteCategory = await deleteCategoryService(id);
 
-    return res.status(200).json(deleteCategory);
+    return res.status(204);
   } catch (err) {
-    res.status(400).json(err.message);
+    res.status(400).json({ message: err.message });
   }
 };
 

@@ -3,7 +3,11 @@ import database from "../database";
 const createCategoryService = async (name) => {
   try {
     const newCategory = await database.query(
-      "INSERT INTO categories (name) VALUES ($1) RETURNING *",
+      `INSERT INTO 
+        categories (name) 
+      VALUES 
+        ($1) 
+      RETURNING *`,
       [name]
     );
 
@@ -15,9 +19,17 @@ const createCategoryService = async (name) => {
 
 const listCategoryService = async () => {
   try {
-    const listCategory = await database.query("SELECT * FROM categories");
+    const listCategory = await database.query(`SELECT * FROM categories`);
 
-    return listCategory.rows;
+    const mapedCategory = listCategory.rows.map((category) => {
+      const { id, name } = category;
+      return {
+        id,
+        name,
+      };
+    });
+
+    return mapedCategory;
   } catch (err) {
     throw new Error(err);
   }
@@ -26,12 +38,15 @@ const listCategoryService = async () => {
 const filterCategoryService = async (id) => {
   try {
     const filterCategory = await database.query(
-      "SELECT * FROM categories WHERE id = $1",
+      `SELECT * FROM 
+        categories 
+      WHERE 
+        id = $1`,
       [id]
     );
 
     if (filterCategory.rows.length === 0) {
-      throw "Category not found";
+      throw `Category not found`;
     }
 
     return filterCategory.rows[0];
@@ -43,12 +58,18 @@ const filterCategoryService = async (id) => {
 const updateCategoryService = async (id, name) => {
   try {
     const updateCategory = await database.query(
-      "UPDATE categories SET name = $2 WHERE id = $1 RETURNING *",
+      `UPDATE 
+        categories 
+      SET 
+        name = $2 
+      WHERE 
+        id = $1 
+      RETURNING *`,
       [id, name]
     );
 
     if (updateCategory.rows.length === 0) {
-      throw "Category not found";
+      throw `Category not found`;
     }
 
     return updateCategory.rows[0];
@@ -60,15 +81,18 @@ const updateCategoryService = async (id, name) => {
 const deleteCategoryService = async (id) => {
   try {
     const deleteCategory = await database.query(
-      "DELETE FROM categories WHERE id = $1 RETURNING *",
+      `DELETE FROM 
+        categories 
+      WHERE 
+        id = $1 
+      RETURNING *`,
       [id]
     );
 
     if (deleteCategory.rows.length === 0) {
-      throw "Category not Found";
+      throw `Category not Found`;
     }
 
-    // return "Category deleted";
     return deleteCategory.rows[0];
   } catch (err) {
     throw new Error(err);

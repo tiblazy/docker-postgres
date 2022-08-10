@@ -3,12 +3,13 @@ version: "3.9"
 services:
   api:
     container_name: api
+    image: api_express
     build: .
     ports:
       - 3000:3000
     environment:
-      - DB_USER=tiburcio
-      - DB_PASSWORD=1234
+      - DB_USER=postgres
+      - DB_PASSWORD=Ti071192
       - DB_HOST=db
       - DB_PORT=5432
       - DB=products_management
@@ -17,18 +18,18 @@ services:
         condition: service_healthy
     volumes:
       - .:/app
-      
+
   db:
     container_name: db
     image: postgres:latest
     ports:
       - 5431:5432
     environment:
-      - POSTGRES_USER=tiburcio
-      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Ti071192
       - POSTGRES_DB=products_management
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U tiburcio -d products_management"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d products_management"]
       interval: 1m30s
       timeout: 30s
       retries: 5

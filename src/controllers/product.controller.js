@@ -13,9 +13,11 @@ const createProductController = async (req, res) => {
   try {
     const createProduct = await createProductService(name, price, category_id);
 
-    return res.status(201).json(createProduct);
+    return res
+      .status(201)
+      .json({ message: "Product Created", product: createProduct });
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ message: err.message });
   }
 };
 
@@ -25,7 +27,7 @@ const listProductController = async (req, res) => {
 
     return res.status(200).json(listProduct);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ message: err.message });
   }
 };
 
@@ -37,7 +39,7 @@ const filterProductController = async (req, res) => {
 
     return res.status(200).json(filterProduct);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ message: err.message });
   }
 };
 
@@ -53,9 +55,11 @@ const updateProductController = async (req, res) => {
       category_id
     );
 
-    return res.status(200).json(updateProduct);
+    return res
+      .status(200)
+      .json({ message: "Product Updated", product: updateProduct });
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ message: err.message });
   }
 };
 
@@ -65,9 +69,9 @@ const deleteProductController = async (req, res) => {
   try {
     const deleteProduct = await deleteProductService(id);
 
-    return res.status(200).json(deleteProduct);
+    return res.status(204);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ message: err.message });
   }
 };
 
@@ -81,7 +85,7 @@ const filterProductCategoryController = async (req, res) => {
 
     return res.status(200).json(filterProductCategory);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ message: err.message });
   }
 };
 
