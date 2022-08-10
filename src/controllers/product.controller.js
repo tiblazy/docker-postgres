@@ -65,11 +65,10 @@ const updateProductController = async (req, res) => {
 
 const deleteProductController = async (req, res) => {
   const { id } = req.params;
-
   try {
     const deleteProduct = await deleteProductService(id);
 
-    return res.status(204);
+    return res.status(204).json();
   } catch (err) {
     return res.status(400).json({ message: err.message });
   }

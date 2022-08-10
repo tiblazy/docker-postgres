@@ -63,7 +63,7 @@ const deleteCategoryController = async (req, res) => {
   try {
     const deleteCategory = await deleteCategoryService(id);
 
-    return res.status(204);
+    return res.status(204).json();
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

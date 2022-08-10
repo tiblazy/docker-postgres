@@ -85,21 +85,28 @@ const updateProductService = async (id, name, price, category_id) => {
 
 const deleteProductService = async (id) => {
   try {
+    const findProduct = await database.query(
+      `SELECT * FROM 
+        products
+      WHERE
+        id = $1`,
+      [id]
+    );
+
+    if (findProduct.rows.length === 0) {
+      throw `Products not Found`;
+    }
+
     const deleteProduct = await database.query(
       `DELETE FROM 
         products 
       WHERE 
         id = $1
       RETURNING *`,
-      [id]
+      [findProduct.rows[0].id]
     );
 
-    if (deleteProduct.rows.length === 0) {
-      throw `Product not Found`;
-    }
-
-    return null;
-    // return deleteProduct.rows[0];
+    return deleteProduct.rows[0];
   } catch (err) {
     throw new Error(err);
   }

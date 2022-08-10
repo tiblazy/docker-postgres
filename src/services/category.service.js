@@ -80,21 +80,28 @@ const updateCategoryService = async (id, name) => {
 
 const deleteCategoryService = async (id) => {
   try {
+    const findCategory = await database.query(
+      `SELECT * FROM 
+        categories
+      WHERE
+        id = $1`,
+      [id]
+    );
+
+    if (findCategory.rows.length === 0) {
+      throw `Category not Found`;
+    }
+
     const deleteCategory = await database.query(
       `DELETE FROM 
         categories 
       WHERE 
         id = $1 
       RETURNING *`,
-      [id]
+      [findCategory.rows[0].id]
     );
 
-    if (deleteCategory.rows.length === 0) {
-      throw `Category not Found`;
-    }
-
-    return null;
-    // return deleteCategory.rows[0];
+    return deleteCategory.rows[0];
   } catch (err) {
     throw new Error(err);
   }
