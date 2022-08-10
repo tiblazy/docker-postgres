@@ -97,7 +97,9 @@ const deleteProductService = async (id) => {
     if (deleteProduct.rows.length === 0) {
       throw `Product not Found`;
     }
-    return deleteProduct.rows[0];
+
+    return null;
+    // return deleteProduct.rows[0];
   } catch (err) {
     throw new Error(err);
   }

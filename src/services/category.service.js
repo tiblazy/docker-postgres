@@ -93,7 +93,8 @@ const deleteCategoryService = async (id) => {
       throw `Category not Found`;
     }
 
-    return deleteCategory.rows[0];
+    return null;
+    // return deleteCategory.rows[0];
   } catch (err) {
     throw new Error(err);
   }
