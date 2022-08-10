@@ -1,3 +1,0 @@
-CREATE DATABASE IF NOT EXISTS tests_products;
-
-CREATE DATABASE IF NOT EXISTS products_management;

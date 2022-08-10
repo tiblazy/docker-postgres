@@ -1,10 +1,11 @@
+version: "3.9"
+
 services:
   api:
-    container_name: sprint4_entrega
-    image: sprint4_entrega_express
+    container_name: api
     build: .
     ports:
-      - 8080:8080
+      - 3000:3000
     environment:
       - DB_USER=tiburcio
       - DB_PASSWORD=1234
@@ -12,15 +13,25 @@ services:
       - DB_PORT=5432
       - DB=products_management
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      
   db:
     container_name: db
-    image: postgres:12
+    image: postgres:latest
     ports:
-      - 5432:5432
+      - 5431:5432
     environment:
       - POSTGRES_USER=tiburcio
       - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=products_management
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tiburcio -d products_management"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
     volumes:
       - ./create_table.sql:/docker-entrypoint-initdb.d/create_tables.sql

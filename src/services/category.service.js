@@ -34,7 +34,7 @@ const filterCategoryService = async (id) => {
       throw "Category not found";
     }
 
-    return filterCategory;
+    return filterCategory.rows[0];
   } catch (err) {
     throw new Error(err);
   }
@@ -51,7 +51,7 @@ const updateCategoryService = async (id, name) => {
       throw "Category not found";
     }
 
-    return updateCategory;
+    return updateCategory.rows[0];
   } catch (err) {
     throw new Error(err);
   }
@@ -68,7 +68,8 @@ const deleteCategoryService = async (id) => {
       throw "Category not Found";
     }
 
-    return "Category deleted";
+    // return "Category deleted";
+    return deleteCategory.rows[0];
   } catch (err) {
     throw new Error(err);
   }
