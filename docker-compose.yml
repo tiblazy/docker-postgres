@@ -7,12 +7,8 @@ services:
     build: .
     ports:
       - 3000:3000
-    environment:
-      - DB_USER=postgres
-      - DB_PASSWORD=Ti071192
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB=products_management
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -35,4 +31,9 @@ services:
       retries: 5
       start_period: 30s
     volumes:
-      - ./create_table.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - products_management:/var/lib/postgresql/data
+
+volumes:
+  products_management:
+    driver: local

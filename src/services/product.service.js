@@ -37,8 +37,8 @@ const filterProductService = async (id) => {
       [id]
     );
 
-    if (filterProduct.rows.length === 0) {
-      throw `Product not found`;
+    if (filterProduct.rowCount === 0) {
+      throw new Error(`Product not found`);
     }
 
     return filterProduct.rows[0];
@@ -57,8 +57,8 @@ const updateProductService = async (id, name, price, category_id) => {
       [id]
     );
 
-    if (findProduct.rows.length === 0) {
-      throw "Product not found";
+    if (findProduct.rowCount === 0) {
+      throw new Error(`Product not found`);
     }
 
     const updateProduct = await database.query(
@@ -93,8 +93,8 @@ const deleteProductService = async (id) => {
       [id]
     );
 
-    if (findProduct.rows.length === 0) {
-      throw `Products not Found`;
+    if (findProduct.rowCount === 0) {
+      throw new Error(`Products not Found`);
     }
 
     const deleteProduct = await database.query(
@@ -126,8 +126,8 @@ const filterProductCategoryService = async (category_id) => {
       [category_id]
     );
 
-    if (filterProductCategory.rows.length === 0) {
-      throw `Category not found`;
+    if (filterProductCategory.rowCount === 0) {
+      throw new Error(`Category not found`);
     }
 
     return filterProductCategory.rows;

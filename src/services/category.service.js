@@ -45,8 +45,8 @@ const filterCategoryService = async (id) => {
       [id]
     );
 
-    if (filterCategory.rows.length === 0) {
-      throw `Category not found`;
+    if (filterCategory.rowCount === 0) {
+      throw new Error(`Category not found`);
     }
 
     return filterCategory.rows[0];
@@ -68,8 +68,8 @@ const updateCategoryService = async (id, name) => {
       [id, name]
     );
 
-    if (updateCategory.rows.length === 0) {
-      throw `Category not found`;
+    if (updateCategory.rowCount === 0) {
+      throw new Error(`Category not found`);
     }
 
     return updateCategory.rows[0];
@@ -88,8 +88,8 @@ const deleteCategoryService = async (id) => {
       [id]
     );
 
-    if (findCategory.rows.length === 0) {
-      throw `Category not Found`;
+    if (findCategory.rowCount === 0) {
+      throw new Error(`Category not Found`);
     }
 
     const deleteCategory = await database.query(
